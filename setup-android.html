@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Android Setup Guide — Heemu</title>
+<meta name="description" content="Quick setup guide for Heemu on Android. Enable Accessibility and Usage Access permissions in just 2 minutes.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* Colors extracted from app_theme.dart lightCalm() factory */
+  --emerald: #1DB954;          /* App primaryColor (Spotify green) */
+  --emerald-dark: #2E7D6F;     /* App secondaryColor (Calm teal) */
+  --emerald-light: #E8F4FD;    /* App breathingStartColor (Light sky blue) */
+  --pink: #E91E8C;             /* Female gender color */
+  --cream: #FDF8F4;            /* App backgroundColor (Beige) */
+  --cream-dark: #F5EFE6;       /* Cream variant */
+  --ink: #1A1A1A;              /* App textPrimary (Near black) */
+  --ink-soft: #333333;          /* Slightly lighter text */
+  --muted: #666666;             /* App textSecondary (Muted gray) */
+  --gold: #F0C27B;             /* App accentColor (Warm gold) */
+  --success: #27AE60;          /* App successColor */
+  --error: #E74C3C;            /* App errorColor */
+  --surface: #FFFFFF;          /* App surfaceColor & cardColor */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.pattern-bg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; opacity: 0.04;
+  background-image:
+    radial-gradient(circle at 25% 25%, var(--emerald) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 75% 75%, var(--emerald) 1.5px, transparent 1.5px);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  padding: 20px 0;
+  background: rgba(253, 248, 244, 0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(29, 185, 84, 0.08);
+}
+.nav-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 32px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.logo {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 600;
+  color: var(--ink); text-decoration: none;
+}
+.logo-mark {
+  width: 36px; height: 36px; background: var(--emerald);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  position: relative; box-shadow: 0 4px 12px rgba(29, 185, 84, 0.25);
+}
+.logo-mark::before {
+  content: ''; width: 14px; height: 14px;
+  border: 2px solid white; border-radius: 50%;
+  border-bottom-color: transparent; border-right-color: transparent;
+  transform: rotate(45deg);
+}
+.nav-back {
+  color: var(--ink-soft); text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  padding: 8px 16px; border-radius: 100px;
+  border: 1px solid rgba(26, 26, 26, 0.15);
+  transition: all 0.2s;
+}
+.nav-back:hover { background: var(--ink); color: var(--cream); }
+
+/* HEADER */
+.page-header {
+  padding: 80px 32px 40px;
+  text-align: center;
+  position: relative; z-index: 2;
+}
+.page-header-container { max-width: 800px; margin: 0 auto; }
+.platform-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(61, 220, 132, 0.1);
+  border: 1px solid rgba(61, 220, 132, 0.3);
+  padding: 8px 16px; border-radius: 100px;
+  font-size: 13px; font-weight: 600;
+  color: #2BB673; margin-bottom: 20px;
+}
+.platform-badge svg { width: 18px; height: 18px; }
+.page-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(36px, 5vw, 56px); font-weight: 500;
+  letter-spacing: -0.02em; line-height: 1.1;
+  color: var(--ink); margin-bottom: 20px;
+}
+.page-title .accent { color: var(--emerald); font-style: italic; }
+.page-subtitle {
+  font-size: 18px; color: var(--ink-soft);
+  line-height: 1.7; max-width: 620px; margin: 0 auto;
+}
+.quick-stats {
+  display: flex; justify-content: center; gap: 32px;
+  margin-top: 32px; flex-wrap: wrap;
+}
+.quick-stat {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; color: var(--muted);
+}
+.quick-stat strong { color: var(--ink); font-weight: 600; }
+
+/* ONBOARDING INTRO */
+.onboarding-intro {
+  max-width: 800px;
+  margin: 40px auto 60px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--emerald-light), var(--cream));
+  border-radius: 24px;
+  border: 1px solid rgba(29, 185, 84, 0.2);
+  display: flex; align-items: center; gap: 20px;
+}
+@media (max-width: 600px) {
+  .onboarding-intro { margin-left: 20px; margin-right: 20px; flex-direction: column; text-align: center; }
+}
+.onboarding-icon {
+  width: 60px; height: 60px;
+  background: var(--emerald);
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+  box-shadow: 0 8px 24px rgba(29, 185, 84, 0.3);
+}
+.onboarding-text { flex: 1; }
+.onboarding-text h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; font-weight: 600;
+  color: var(--ink); margin-bottom: 6px;
+}
+.onboarding-text p {
+  font-size: 15px; color: var(--ink-soft); line-height: 1.6;
+}
+
+/* PART SECTION (big section divider) */
+.part-section {
+  max-width: 1100px;
+  margin: 0 auto 100px;
+  padding: 0 32px;
+  position: relative;
+  z-index: 2;
+}
+.part-header {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+.part-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.part-label-num {
+  width: 24px;
+  height: 24px;
+  background: var(--emerald);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.part-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.part-title .accent { color: var(--emerald); font-style: italic; }
+.part-desc {
+  font-size: 16px;
+  color: var(--ink-soft);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* STEP ROWS — alternating */
+.step-row {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 60px;
+  margin-bottom: 70px;
+  align-items: center;
+}
+.step-row.reverse { grid-template-columns: 280px 1fr; }
+.step-row.reverse .step-content { order: 2; }
+.step-row.reverse .step-phone { order: 1; }
+
+@media (max-width: 900px) {
+  .step-row, .step-row.reverse {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .step-row.reverse .step-content,
+  .step-row.reverse .step-phone { order: 0; }
+}
+
+.step-content {}
+.step-number-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--emerald-light);
+  color: var(--emerald-dark);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.step-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.step-title .highlight {
+  background: linear-gradient(180deg, transparent 60%, rgba(29, 185, 84, 0.25) 60%);
+  padding: 0 4px;
+}
+.step-desc {
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.step-callout {
+  padding: 12px 16px;
+  background: white;
+  border-radius: 12px;
+  border-left: 3px solid var(--emerald);
+  font-size: 14px;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.step-callout strong { color: var(--ink); }
+.step-callout-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* PHONE FRAME WITH REAL SCREENSHOT */
+.step-phone {
+  display: flex;
+  justify-content: center;
+}
+.phone-frame {
+  width: 260px;
+  background: #1A1A1A;
+  border-radius: 38px;
+  padding: 10px;
+  box-shadow:
+    0 30px 60px -20px rgba(26, 26, 26, 0.35),
+    0 0 0 1.5px #2a2a2a;
+  position: relative;
+}
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  left: -2px; top: 130px;
+  width: 3px; height: 50px;
+  background: #1A1A1A;
+  border-radius: 2px 0 0 2px;
+}
+.phone-frame::after {
+  content: '';
+  position: absolute;
+  right: -2px; top: 110px;
+  width: 3px; height: 80px;
+  background: #1A1A1A;
+  border-radius: 0 2px 2px 0;
+}
+.phone-screen-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 32px;
+  background: white;
+}
+
+/* CTA Section */
+.cta-section {
+  margin: 60px auto;
+  max-width: 800px;
+  padding: 48px 40px;
+  background: linear-gradient(135deg, var(--emerald-dark) 0%, var(--emerald) 100%);
+  border-radius: 28px;
+  text-align: center;
+  color: white;
+  position: relative; z-index: 2;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+@media (max-width: 600px) {
+  .cta-section { margin: 60px 20px; padding: 36px 24px; }
+}
+.cta-arabic {
+  font-family: 'Amiri', serif; font-size: 26px;
+  margin-bottom: 8px; direction: rtl; opacity: 0.95;
+  position: relative;
+}
+.cta-arabic-trans {
+  font-size: 13px; opacity: 0.8;
+  font-style: italic; margin-bottom: 24px;
+  position: relative;
+}
+.cta-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 500;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+.cta-title em { font-style: italic; }
+.cta-desc {
+  font-size: 16px; opacity: 0.9;
+  margin-bottom: 28px; max-width: 500px;
+  margin-left: auto; margin-right: auto;
+  line-height: 1.6;
+  position: relative;
+}
+.cta-buttons {
+  display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+  position: relative;
+}
+.cta-btn {
+  padding: 14px 28px;
+  border-radius: 100px;
+  font-size: 14px; font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.cta-btn-primary {
+  background: white; color: var(--ink);
+}
+.cta-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+.cta-btn-secondary {
+  background: transparent; color: white;
+  border: 1.5px solid rgba(255,255,255,0.4);
+}
+.cta-btn-secondary:hover {
+  background: rgba(255,255,255,0.1); border-color: white;
+}
+
+/* COMPLETION BANNER */
+.completion-banner {
+  max-width: 800px;
+  margin: 0 auto 60px;
+  padding: 32px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px -20px rgba(26, 26, 26, 0.1);
+  text-align: center;
+  border: 1.5px solid var(--emerald);
+}
+@media (max-width: 600px) {
+  .completion-banner { margin-left: 20px; margin-right: 20px; }
+}
+.completion-icon {
+  width: 70px; height: 70px;
+  background: var(--emerald);
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 12px 30px rgba(29, 185, 84, 0.35);
+}
+.completion-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.completion-title em { font-style: italic; color: var(--emerald); }
+.completion-desc {
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto 20px;
+}
+.completion-perms {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.completion-perm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--emerald-light);
+  color: var(--emerald-dark);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* FAQ */
+.faq-section { padding: 60px 32px; position: relative; z-index: 2; }
+.faq-container { max-width: 700px; margin: 0 auto; }
+.section-eyebrow {
+  text-align: center; font-size: 12px;
+  text-transform: uppercase; letter-spacing: 3px;
+  color: var(--emerald); font-weight: 600; margin-bottom: 16px;
+}
+.section-title-sm {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px; font-weight: 500;
+  text-align: center; letter-spacing: -0.01em;
+  margin-bottom: 40px;
+}
+.faq-item {
+  border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+  padding: 24px 0;
+}
+.faq-question {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px; font-weight: 500;
+  color: var(--ink); cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  user-select: none; list-style: none;
+}
+.faq-question::-webkit-details-marker { display: none; }
+.faq-question::after {
+  content: '+'; font-size: 24px; color: var(--emerald);
+  font-weight: 300; transition: transform 0.3s;
+}
+details[open] .faq-question::after { transform: rotate(45deg); }
+.faq-answer {
+  margin-top: 12px; color: var(--ink-soft);
+  font-size: 15px; line-height: 1.7;
+}
+
+/* FOOTER */
+footer {
+  padding: 60px 32px 40px;
+  background: var(--ink); color: var(--cream);
+  position: relative; z-index: 2;
+}
+.footer-container { max-width: 1200px; margin: 0 auto; }
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px; margin-bottom: 40px;
+}
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+.footer-brand { max-width: 320px; }
+.footer-brand .logo { color: var(--cream); margin-bottom: 16px; }
+.footer-tagline {
+  color: rgba(253, 248, 244, 0.6);
+  font-size: 14px; line-height: 1.6;
+}
+.footer-col h4 {
+  font-family: 'DM Serif Display', serif; font-size: 16px;
+  font-weight: 500; margin-bottom: 20px; color: var(--cream);
+}
+.footer-col a {
+  display: block; color: rgba(253, 248, 244, 0.6);
+  text-decoration: none; font-size: 14px;
+  margin-bottom: 12px; transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--emerald); }
+
+.footer-platform-link {
+  display: flex !important;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 0;
+}
+.footer-platform-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+  object-fit: contain;
+  background: transparent;
+}
+.footer-platform-icon-apple {
+  filter: invert(1) brightness(1.2);
+  width: 30px;
+  height: 30px;
+}
+.footer-platform-link:hover .footer-platform-icon {
+  transform: scale(1.15);
+}
+.footer-platform-link em {
+  font-style: italic;
+  opacity: 0.6;
+  font-size: 12px;
+}
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid rgba(253, 248, 244, 0.1);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+  font-size: 13px; color: rgba(253, 248, 244, 0.5);
+}
+
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="pattern-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <div class="logo-mark"></div>
+      Heemu
+    </a>
+    <a href="index.html" class="nav-back">← Back to Home</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<section class="page-header">
+  <div class="page-header-container">
+    <div class="platform-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24c-2.86-1.21-6.08-1.21-8.94 0L5.65 5.67c-.19-.29-.58-.38-.87-.2-.28.18-.37.54-.22.83L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm10 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z"/></svg>
+      Android Setup Guide
+    </div>
+    <h1 class="page-title">Set up Heemu in <span class="accent">2 minutes</span>.</h1>
+    <p class="page-subtitle">Just two permissions and you're ready. Follow these real screens from the app to enable everything quickly.</p>
+
+    <div class="quick-stats">
+      <div class="quick-stat">⏱️ <strong>2 min</strong> total time</div>
+      <div class="quick-stat">🎯 <strong>2 permissions</strong> to enable</div>
+      <div class="quick-stat">📱 <strong>Android 8+</strong> required</div>
+    </div>
+  </div>
+</section>
+
+<!-- ONBOARDING INTRO -->
+<div class="onboarding-intro">
+  <div class="onboarding-icon">📋</div>
+  <div class="onboarding-text">
+    <h3>First, complete the onboarding</h3>
+    <p>When you open Heemu for the first time, walk through the welcome screens to personalize your experience: gender, intervention mode (Dhikr or Quran), pause duration, and theme. Once done, you'll land on the <strong>Permissions Required</strong> page shown below. That's where this guide picks up.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 1: ACCESSIBILITY SERVICE
+     ═══════════════════════════════════════ -->
+<section class="part-section">
+  <div class="part-header">
+    <div class="part-label">
+      <div class="part-label-num">1</div>
+      Part One
+    </div>
+    <h2 class="part-title">Enable <span class="accent">Accessibility Service</span></h2>
+    <p class="part-desc">This permission lets Heemu detect when you open a distracting app, so it can show you the mindful pause screen.</p>
+  </div>
+
+  <!-- STEP 1.1 -->
+  <div class="step-row">
+    <div class="step-content">
+      <div class="step-number-pill">Step 1 of 4</div>
+      <h3 class="step-title">Tap <span class="highlight">"Accessibility Service"</span></h3>
+      <p class="step-desc">On the Permissions Required page, you'll see two options. Tap on <strong>Accessibility Service</strong>, the first card with the user-tag icon. The app will redirect you to your phone's Settings.</p>
+      <div class="step-callout">
+        <span class="step-callout-icon">👉</span>
+        <span>The card says <strong>"Detects when apps open"</strong>. That's the one to tap first.</span>
+      </div>
+    </div>
+    <div class="step-phone">
+      <div class="phone-frame">
+        <img src="screenshots/access_step1.png" alt="Permissions Required screen with Accessibility Service highlighted" class="phone-screen-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 1.2 -->
+  <div class="step-row reverse">
+    <div class="step-content">
+      <div class="step-number-pill">Step 2 of 4</div>
+      <h3 class="step-title">Find <span class="highlight">Heemu</span> in the list</h3>
+      <p class="step-desc">You'll now be in your phone's <strong>Accessibility settings</strong>. Scroll down to the <strong>"Downloaded services"</strong> section and find the Heemu icon (the blue Flutter logo). Tap on it.</p>
+      <div class="step-callout">
+        <span class="step-callout-icon">🔍</span>
+        <span>It will be listed as <strong>"Off"</strong> initially. That's fine, we'll turn it on next.</span>
+      </div>
+    </div>
+    <div class="step-phone">
+      <div class="phone-frame">
+        <img src="screenshots/access_step2.png" alt="Android Accessibility settings list with Heemu highlighted" class="phone-screen-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 1.3 -->
+  <div class="step-row">
+    <div class="step-content">
+      <div class="step-number-pill">Step 3 of 4</div>
+      <h3 class="step-title">Turn ON <span class="highlight">"Use service"</span></h3>
+      <p class="step-desc">On the Heemu service page, you'll see a single toggle switch at the top labeled <strong>"Use service"</strong>. Tap it to turn the service ON.</p>
+      <div class="step-callout">
+        <span class="step-callout-icon">🔘</span>
+        <span>The toggle is in the <strong>top-right corner</strong>. Tap it once and it will turn green.</span>
+      </div>
+    </div>
+    <div class="step-phone">
+      <div class="phone-frame">
+        <img src="screenshots/access_step3.png" alt="Heemu service page with Use service toggle highlighted" class="phone-screen-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 1.4 -->
+  <div class="step-row reverse">
+    <div class="step-content">
+      <div class="step-number-pill">Step 4 of 4</div>
+      <h3 class="step-title">Tap <span class="highlight">"ALLOW"</span></h3>
+      <p class="step-desc">A confirmation dialog will appear asking <em>"Allow Heemu to have full control of your device?"</em>. This is Android's standard security check. Tap <strong>ALLOW</strong> to confirm.</p>
+      <div class="step-callout">
+        <span class="step-callout-icon">🔒</span>
+        <span><strong>Privacy:</strong> Heemu only uses this to detect <em>which app</em> opens. It never reads your screen content, messages, or any personal data.</span>
+      </div>
+    </div>
+    <div class="step-phone">
+      <div class="phone-frame">
+        <img src="screenshots/access_step4.png" alt="Android permission dialog with ALLOW button highlighted" class="phone-screen-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 1 COMPLETE -->
+  <div class="completion-banner">
+    <div class="completion-icon">✓</div>
+    <h3 class="completion-title">Accessibility <em>enabled</em>!</h3>
+    <p class="completion-desc">MashaAllah, half done. Now head back to the Heemu app, and you'll see Accessibility marked as granted. One more permission to go.</p>
+    <div class="completion-perms">
+      <div class="completion-perm">✓ Accessibility Service</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PART 2: APP USAGE PERMISSION
+     ═══════════════════════════════════════ -->
+<section class="part-section">
+  <div class="part-header">
+    <div class="part-label">
+      <div class="part-label-num">2</div>
+      Part Two
+    </div>
+    <h2 class="part-title">Enable <span class="accent">App Usage Permission</span></h2>
+    <p class="part-desc">This permission lets Heemu show you accurate screen time statistics and track your saved minutes.</p>
+  </div>
+
+  <!-- STEP 2.1 -->
+  <div class="step-row">
+    <div class="step-content">
+      <div class="step-number-pill">Step 1 of 3</div>
+      <h3 class="step-title">Tap <span class="highlight">"App Usage Permission"</span></h3>
+      <p class="step-desc">Back on the Permissions Required page, now tap the <strong>second card</strong> for App Usage Permission. The app will redirect you to your phone's Usage access settings.</p>
+      <div class="step-callout">
+        <span class="step-callout-icon">👉</span>
+        <span>The card says <strong>"Analyzes screen time"</strong>. Tap this one now.</span>
+      </div>
+    </div>
+    <div class="step-phone">
+      <div class="phone-frame">
+        <img src="screenshots/usage_step1.png" alt="Permissions Required screen with App Usage Permission highlighted" class="phone-screen-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2.2 -->
+  <div class="step-row reverse">
+    <div class="step-content">
+      <div class="step-number-pill">Step 2 of 3</div>
+      <h3 class="step-title">Find <span class="highlight">Heemu</span> again</h3>
+      <p class="step-desc">You'll see a list of apps under <strong>"Usage access"</strong>. Scroll to find Heemu (with the blue Flutter logo). It will show as <strong>"Not allowed"</strong>. Tap on it.</p>
+      <div class="step-callout">
+        <span class="step-callout-icon">🔍</span>
+        <span>The list is usually alphabetical, so Heemu will be near the middle.</span>
+      </div>
+    </div>
+    <div class="step-phone">
+      <div class="phone-frame">
+        <img src="screenshots/usage_step2.png" alt="Usage access settings with Heemu highlighted" class="phone-screen-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2.3 -->
+  <div class="step-row">
+    <div class="step-content">
+      <div class="step-number-pill">Step 3 of 3</div>
+      <h3 class="step-title">Turn ON <span class="highlight">"Permit usage access"</span></h3>
+      <p class="step-desc">On the Heemu page, tap the toggle at the top labeled <strong>"Permit usage access"</strong>. That's it! No extra dialog this time.</p>
+      <div class="step-callout">
+        <span class="step-callout-icon">🎉</span>
+        <span>Once the toggle turns green, both permissions are granted. <strong>Head back to the Heemu app</strong> and start your mindful journey.</span>
+      </div>
+    </div>
+    <div class="step-phone">
+      <div class="phone-frame">
+        <img src="screenshots/usage_step3.png" alt="Heemu page with Permit usage access toggle highlighted" class="phone-screen-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2 COMPLETE -->
+  <div class="completion-banner">
+    <div class="completion-icon">✓</div>
+    <h3 class="completion-title">All set, <em>MashaAllah</em>!</h3>
+    <p class="completion-desc">Both permissions are now granted. Open Heemu, pick the apps you want to limit, and let the app help you turn every distraction into hasanat.</p>
+    <div class="completion-perms">
+      <div class="completion-perm">✓ Accessibility Service</div>
+      <div class="completion-perm">✓ App Usage Permission</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-arabic">رَبِّ زِدْنِي عِلْمًا</div>
+  <p class="cta-arabic-trans">"My Lord, increase me in knowledge." — Ta-Ha 20:114</p>
+  <h2 class="cta-title">Now <em>enjoy</em> the focus 🌙</h2>
+  <p class="cta-desc">Your phone is now your companion in worship, not your distraction. May Allah make every saved moment a means of barakah and growth.</p>
+  <div class="cta-buttons">
+    <a href="index.html#download" class="cta-btn cta-btn-primary">Back to App →</a>
+    <a href="index.html#faq" class="cta-btn cta-btn-secondary">View FAQ</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-container">
+    <div class="section-eyebrow">Troubleshooting</div>
+    <h2 class="section-title-sm">Common Questions</h2>
+
+    <details class="faq-item">
+      <summary class="faq-question">I don't see "Downloaded services" on my phone</summary>
+      <p class="faq-answer">Different Android brands name it differently. On Samsung, look for <strong>"Installed apps"</strong>. On Xiaomi/MIUI, look for <strong>"Downloaded services"</strong>. On OnePlus and Vivo, try <strong>"Installed services"</strong>. You can always use the search bar at the top of Settings and type "Heemu" to jump directly.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">The Accessibility toggle keeps turning off by itself</summary>
+      <p class="faq-answer">Some phones (especially Xiaomi, OPPO, Vivo, Realme) aggressively disable accessibility services to save battery. Go to <strong>Settings → Battery → Battery optimization</strong>, find Heemu, and set it to <strong>"Don't optimize"</strong>. This keeps the service running reliably.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">Why does Heemu need "full control" of my device?</summary>
+      <p class="faq-answer">This is Android's standard wording for the Accessibility API. It sounds scary but it's necessary for any app-blocking feature on Android. Heemu only uses this to detect <strong>which app</strong> is opening (not what's inside it). We never read screen content, messages, keystrokes, or any personal data. Everything stays on your device.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">Will this drain my battery?</summary>
+      <p class="faq-answer">No. Heemu is optimized for minimal battery use. It only activates when an app launches. Most of the time, it uses zero battery. Typical impact is less than 1% per day.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">I tapped "Refresh permission status" but nothing changed</summary>
+      <p class="faq-answer">Make sure both toggles are actually turned ON in your phone's Settings, then go back and verify. Sometimes Android requires the toggle to be off-then-on once before it registers. If still stuck, restart the app or your phone.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">Need more help?</summary>
+      <p class="faq-answer">Email us at <a href="mailto:support@sapsharks.com" style="color:var(--emerald);">support@sapsharks.com</a>. We typically respond within 24 hours, inshaAllah.</p>
+    </details>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark"></div>
+          Heemu
+        </a>
+        <p class="footer-tagline">A digital wellness app for Muslims. Turn screen time into meaningful worship. Built with sincerity by SAP-SHARKS.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="index.html#how-it-works">How It Works</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#gallery">Gallery</a>
+        <a href="index.html#download">Download</a>
+        <a href="index.html#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Setup Guides</h4>
+        <a href="setup-android.html" class="footer-platform-link">
+          <img src="screenshots/google-play-icon.png" alt="Google Play" class="footer-platform-icon">
+          <span>Android Setup</span>
+        </a>
+        <a href="setup-ios.html" class="footer-platform-link">
+          <img src="screenshots/apple-icon.png" alt="Apple App Store" class="footer-platform-icon footer-platform-icon-apple">
+          <span>iOS Setup <em>(Soon)</em></span>
+        </a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="mailto:support@sapsharks.com">Contact</a>
+        <a href="mailto:support@sapsharks.com">Support</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 SAP-SHARKS. Made with sincerity for the Ummah.</div>
+      <div>support@sapsharks.com</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.step-row, .faq-item, .completion-banner').forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
